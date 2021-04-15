@@ -48,6 +48,7 @@ public class UploadAsset {
             // Step 3
             DefaultUriBuilderFactory defaultUriTemplateHandler = new DefaultUriBuilderFactory("https://hostname/v3/");
 
+
             // Step 4
             RestTemplate restTemplate1 = new RestTemplateBuilder()
                     .uriTemplateHandler(defaultUriTemplateHandler)
