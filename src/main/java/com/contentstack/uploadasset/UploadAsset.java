@@ -38,6 +38,7 @@ public class UploadAsset {
         SpringApplication.run(UploadAsset.class, args);
     }
 
+
     private static FileSystemResource getResource(final String location) {
         return new FileSystemResource(location);
     }
