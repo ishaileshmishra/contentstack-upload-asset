@@ -20,7 +20,19 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 @SpringBootApplication
 @RestController
 @Controller
+@Configuration
+@PropertySource("classpath:application.properties")
 public class UploadAsset {
+
+    @Value("${config.api_key}")
+    private String api_key;
+
+    @Value("${config.authtoken}")
+    private String authtoken;
+
+    @Value("${config.host}")
+    private String host;
+
 
     public static void main(String[] args) {
         SpringApplication.run(UploadAsset.class, args);
@@ -30,56 +42,40 @@ public class UploadAsset {
         return new FileSystemResource(location);
     }
 
+
     @GetMapping(value = "/upload")
     public HttpEntity testAssetUpload() {
 
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            headers.set("api_key", "put_your_api_key");
-            headers.set("authtoken", "authtoken");
+            headers.set("api_key", api_key);
+            headers.set("authtoken", authtoken);
             headers.set("Content-Type", "multipart/form-data");
 
             //Step 1
             MultiValueMap<String, Object> payload = new LinkedMultiValueMap<>();
-            payload.add("asset[upload]", getResource("put your file location path"));//loadResourceFile());
+            payload.add("asset[upload]", getResource("/Users/shaileshmishra/Documents/workspace-spring-tool/contentstack-springboot-upload-asset/src/main/resources/abcd.jpeg"));//loadResourceFile());
 
             // Step 2
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(payload, headers);
+            DefaultUriBuilderFactory defaultUriTemplateHandler = new DefaultUriBuilderFactory("https://"+host+"/v3/");
 
             // Step 3
-            DefaultUriBuilderFactory defaultUriTemplateHandler = new DefaultUriBuilderFactory("https://hostname/v3/");
-
-
-            // Step 4
             RestTemplate restTemplate1 = new RestTemplateBuilder()
                     .uriTemplateHandler(defaultUriTemplateHandler)
                     .build();
 
-            //Step 5
+            //Step 4
             ResponseEntity<Object> response = restTemplate1.postForEntity("assets?include_dimension=true", requestEntity, Object.class);
-
             System.out.println(response);
+
             return ResponseEntity.ok(response);
         } catch (RestClientResponseException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
-    }
-
-    @Configuration
-    @PropertySource("classpath:application.properties")
-    public class KeyConfigProperties {
-        //...
-        @Value("${config.api_key}")
-        private String api_key;
-
-        @Value("${config.authtoken}")
-        private String authtoken;
-
-        @Value("${config.host}")
-        private String host;
     }
 
 }
