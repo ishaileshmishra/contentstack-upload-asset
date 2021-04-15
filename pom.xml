@@ -6,12 +6,12 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.contentstack</groupId>
 	<artifactId>springboot-asset-upload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>contentstack-springboot-upload-asset</name>
+	<name>contentstack-upload-asset</name>
 	<description>Demo project for uploading assets to contentstack</description>
 	<properties>
 		<java.version>1.8</java.version>

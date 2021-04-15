@@ -62,9 +62,7 @@ public class UploadAsset {
             DefaultUriBuilderFactory defaultUriTemplateHandler = new DefaultUriBuilderFactory("https://"+host+"/v3/");
 
             // Step 3
-            RestTemplate restTemplate1 = new RestTemplateBuilder()
-                    .uriTemplateHandler(defaultUriTemplateHandler)
-                    .build();
+            RestTemplate restTemplate1 = new RestTemplateBuilder().uriTemplateHandler(defaultUriTemplateHandler).build();
 
             //Step 4
             ResponseEntity<Object> response = restTemplate1.postForEntity("assets?include_dimension=true", requestEntity, Object.class);
