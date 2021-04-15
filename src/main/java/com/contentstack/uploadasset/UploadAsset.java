@@ -66,11 +66,11 @@ public class UploadAsset {
 
             //Step 4
             ResponseEntity<Object> response = restTemplate1.postForEntity("assets?include_dimension=true", requestEntity, Object.class);
-            System.out.println(response);
 
             return ResponseEntity.ok(response);
+
         } catch (RestClientResponseException e) {
-            System.out.println(e.getMessage());
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
