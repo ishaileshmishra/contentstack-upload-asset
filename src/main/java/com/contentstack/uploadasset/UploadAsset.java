@@ -1,8 +1,11 @@
 package com.contentstack.uploadasset;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -23,10 +26,9 @@ public class UploadAsset {
         SpringApplication.run(UploadAsset.class, args);
     }
 
-    private static FileSystemResource getResource(final String location){
+    private static FileSystemResource getResource(final String location) {
         return new FileSystemResource(location);
     }
-
 
     @GetMapping(value = "/upload")
     public HttpEntity testAssetUpload() {
@@ -64,6 +66,20 @@ public class UploadAsset {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
+    }
+
+    @Configuration
+    @PropertySource("classpath:application.properties")
+    public class KeyConfigProperties {
+        //...
+        @Value("${config.api_key}")
+        private String api_key;
+
+        @Value("${config.authtoken}")
+        private String authtoken;
+
+        @Value("${config.host}")
+        private String host;
     }
 
 }
