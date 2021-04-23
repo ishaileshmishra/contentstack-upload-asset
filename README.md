@@ -11,7 +11,8 @@ This repository helps you to create Demo project for uploading assets to content
 
  #### provide the image file path location of file you have to upload.
 
-    @GetMapping(value = "/upload")
+```java
+@GetMapping(value = "/upload")
     public HttpEntity assetUpload() {
 
         try {
@@ -45,3 +46,4 @@ This repository helps you to create Demo project for uploading assets to content
         }
 
     }
+```
